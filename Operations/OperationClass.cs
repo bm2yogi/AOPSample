@@ -15,7 +15,6 @@ namespace Operations
         [Logging(Category = "CategoryOne")]
         public OperationResponse SucceedingOperation(OperationRequest request)
         {
-            System.Threading.Thread.Sleep(1500);
             return new OperationResponse { Data = "outgoingData" };
         }
 
@@ -24,6 +23,16 @@ namespace Operations
         {
             System.Threading.Thread.Sleep(1500);
             throw new ApplicationException("Oops. What'd I do?");
+        }
+
+        [Logging(Category = "Async")]
+        public void AsyncLogged(OperationRequest request)
+        {
+        }
+
+        [Logging(Category = "Sync")]
+        public void SyncLogged(OperationRequest request)
+        {
         }
     }
 
