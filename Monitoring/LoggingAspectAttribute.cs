@@ -10,21 +10,22 @@ namespace Monitoring
 
     [Serializable]
     [AttributeUsage(AttributeTargets.Method)]
-    public sealed class LoggingAttribute : OnMethodBoundaryAspect
+    public sealed class LoggingAspectAttribute : OnMethodBoundaryAspect
     {
         public string Category { get; set; }
 
         public override void OnEntry(MethodExecutionArgs args)
         {
             Console.WriteLine("Method started: {0:ss.ffff}", DateTime.Now);
+            Console.WriteLine("Value for parameter ({0}) was provided as {1}", args.Method.GetParameters().First().Name, args.Arguments[0]);
 
             if (Category == "Async")
                 new TaskFactory().StartNew(
                     () =>
                     {
-                        Console.WriteLine("Logging activity started: {0:ss.ffff}", DateTime.Now);
+                        Console.WriteLine("Logging activity ({0}) started: {1:ss.ffff}", args.Method.Name, DateTime.Now);
                         Thread.Sleep(3000);
-                        Console.WriteLine("Logging activity ended: {0:ss.ffff}", DateTime.Now);
+                        Console.WriteLine("Logging activity ({0}) ended: {1:ss.ffff}",args.Method.Name, DateTime.Now);
                     }
 
                     );
@@ -63,11 +64,9 @@ namespace Monitoring
 
         public override void OnExit(MethodExecutionArgs args)
         {
-
             Console.WriteLine("Method exited: {0:ss.ffff}", DateTime.Now);
-            //Console.WriteLine("Exited Method {0} at {1:HH:mm:ss.ffff}: Result was {2}", args.Method.Name, DateTime.Now, args.ReturnValue);
-            //Console.WriteLine("TestCategory: {0}", Category);
-            //Console.WriteLine();
+            Console.WriteLine("Value for parameter ({0}) was returned as {1}", args.Method.GetParameters().First().Name, args.Arguments[0]);
+            Console.WriteLine("Method ({0}) executed and returned {1}", args.Method.Name, args.ReturnValue);
         }
     }
 }

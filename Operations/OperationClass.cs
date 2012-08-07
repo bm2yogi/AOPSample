@@ -6,51 +6,48 @@ namespace Operations
 
     public interface IOperationClass
     {
-        OperationResponse SucceedingOperation(OperationRequest request);
+        string SucceedingOperation(string request);
         OperationResponse FailingOperation(OperationRequest request);
+        OperationResponse AsyncLogged(OperationRequest request);
+        OperationResponse SyncLogged(OperationRequest request);
     }
 
     public class OperationClass : IOperationClass
     {
-        [Logging(Category = "CategoryOne")]
-        public OperationResponse SucceedingOperation(OperationRequest request)
+        [LoggingAspect(Category = "CategoryOne")]
+        public string SucceedingOperation(string request)
         {
-            return new OperationResponse { Data = "outgoingData" };
+            Array.Reverse(request.ToCharArray());
+            return request;
         }
 
-        [Logging(Category = "CategoryTwo")]
+        [LoggingAspect(Category = "CategoryTwo")]
         public OperationResponse FailingOperation(OperationRequest request)
         {
             System.Threading.Thread.Sleep(1500);
             throw new ApplicationException("Oops. What'd I do?");
         }
 
-        [Logging(Category = "Async")]
-        public void AsyncLogged(OperationRequest request)
+        [LoggingAspect(Category = "Async")]
+        public OperationResponse AsyncLogged(OperationRequest request)
         {
+            return new OperationResponse { Data = "outgoingData" };
         }
 
-        [Logging(Category = "Sync")]
-        public void SyncLogged(OperationRequest request)
+        [LoggingAspect(Category = "Sync")]
+        public OperationResponse SyncLogged(OperationRequest request)
         {
+            return new OperationResponse { Data = "outgoingData" };
         }
     }
 
     public class OperationResponse
     {
         public string Data { get; set; }
-        public override string ToString()
-        {
-            return Data.ToString();
-        }
     }
 
     public class OperationRequest
     {
         public string Data { get; set; }
-        public override string ToString()
-        {
-            return Data.ToString();
-        }
     }
 }

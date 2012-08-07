@@ -11,7 +11,7 @@ namespace AOPSample
         public void When_the_operation_is_successful()
         {
             var operationClass = new OperationClass();
-            var request = new OperationRequest{ Data = "incomingData" };
+            var request = "incomingData";
             var response = operationClass.SucceedingOperation(request);
 
         }

@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoggingAttribute.cs" />
+    <Compile Include="ExceptionHandlerAttribute.cs" />
+    <Compile Include="LoggingAspectAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
