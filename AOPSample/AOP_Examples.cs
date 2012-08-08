@@ -17,5 +17,11 @@ namespace AOPSample
         {
             new SomeAsyncService().ServiceOperation("Seattle");
         }
+
+        [Test]
+        public void Monitoring_the_call_stack()
+        {
+            new AMoreComplexService().ServiceOperation("Seattle");
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace Monitoring
         public override void OnEntry(MethodExecutionArgs args)
         {
             args.MethodExecutionTag = Stopwatch.StartNew();
-            Console.WriteLine("--OnEntry--");
+            Console.WriteLine("--OnEntry--{0}.{1}",args.Method.DeclaringType.Name, args.Method.Name);
             Console.WriteLine("Async={0}", Async);
             Console.WriteLine("Method ({0}) started at {1:mm:ss}.", args.Method.Name, DateTime.Now);
             Console.WriteLine("Value for parameter ({0}) was provided as \"{1}\".", args.Method.GetParameters().First().Name, args.Arguments[0]);
@@ -30,25 +30,17 @@ namespace Monitoring
             Console.WriteLine();
         }
 
-        private readonly Action<MethodExecutionArgs> _writeToLog =
-            (args) =>
-            {
-                Console.WriteLine("Logging activity ({0}) started: {1:mm:ss}.", args.Method.Name, DateTime.Now);
-                Thread.Sleep(2000);
-                Console.WriteLine("Logging activity ({0}) ended: {1:mm:ss}.", args.Method.Name, DateTime.Now);
-            };
-
         public override void OnSuccess(MethodExecutionArgs args)
         {
-            Console.WriteLine("--OnSuccess--");
+            Console.WriteLine("--OnSuccess--{0}.{1}", args.Method.DeclaringType.Name, args.Method.Name);
             Console.WriteLine("Method ({0}) completed without errors at {1:mm:ss}.", args.Method.Name, DateTime.Now);
             Console.WriteLine();
         }
 
         public override void OnException(MethodExecutionArgs args)
         {
-            Console.WriteLine("--OnException--");
-            args.FlowBehavior = FlowBehavior.Continue;
+            Console.WriteLine("--OnException--{0}.{1}", args.Method.DeclaringType.Name, args.Method.Name);
+            //args.FlowBehavior = FlowBehavior.Continue;
             Console.WriteLine("Exception observed in method ({0}) at {1:mm:ss}. Message: {2}", args.Method.Name, DateTime.Now,
                               args.Exception.Message);
             Console.WriteLine();
@@ -56,7 +48,7 @@ namespace Monitoring
 
         public override void OnExit(MethodExecutionArgs args)
         {
-            Console.WriteLine("--OnExit--");
+            Console.WriteLine("--OnExit--{0}.{1}", args.Method.DeclaringType.Name, args.Method.Name);
             var stopWatch = (Stopwatch)args.MethodExecutionTag;
 
             Console.WriteLine("Method ({0}) exited at {1:mm:ss}.", args.Method.Name, DateTime.Now);
@@ -64,5 +56,13 @@ namespace Monitoring
             Console.WriteLine("Method returned value \"{0}\".", args.ReturnValue);
             Console.WriteLine();
         }
+
+        private readonly Action<MethodExecutionArgs> _writeToLog =
+            (args) =>
+                {
+                    Console.WriteLine("Logging activity ({0}) started: {1:mm:ss}.", args.Method.Name, DateTime.Now);
+                    Thread.Sleep(2000);
+                    Console.WriteLine("Logging activity ({0}) ended: {1:mm:ss}.", args.Method.Name, DateTime.Now);
+                };
     }
 }
