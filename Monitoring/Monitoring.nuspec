@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Monitoring</id>
+    <version>0.1</version>
+    <title>PostSharp AOP Example</title>
+    <authors>Michael Ibarra</authors>
+    <owners>Getty Images</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>PostSharp AOP Example</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <tags></tags>
+  </metadata>
+</package>
