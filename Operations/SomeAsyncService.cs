@@ -5,8 +5,8 @@ namespace Operations
 {
     public class SomeAsyncService : ISomeService
     {
-        //
-        //[Monitoring.LoggingAspect(Async = true)]
+
+        [Monitoring.LoggingAspect(Async = true)]
         public string ServiceOperation(string inputParam)
         {
             Thread.Sleep(3000);

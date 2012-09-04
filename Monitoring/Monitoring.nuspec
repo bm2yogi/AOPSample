@@ -2,12 +2,12 @@
 <package >
   <metadata>
     <id>Monitoring</id>
-    <version>0.1</version>
-    <title>PostSharp AOP Example</title>
+    <version>0.21</version>
+    <title>AOP Metrics</title>
     <authors>Michael Ibarra</authors>
-    <owners>Getty Images</owners>
+    <owners>Michael Ibarra</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>PostSharp AOP Example</description>
+    <description>AOP Metrics</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2012</copyright>
     <tags></tags>
